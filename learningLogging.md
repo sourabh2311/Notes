@@ -16,6 +16,10 @@
 
   Whether an individual call to V generates a log record depends on the setting of the -v and --vmodule flags; both are off by default. If the level in the call to V is at least the value of -v, or of -vmodule for the source file containing the call, the V call will log.
 
+  Basically -v thing should be >= V thing
+
+* `-logtostderr` log to standard error instead of files
+* `-alsologtostderr` log to standard error as well as files
 * `-stderrthreshold value` - logs at or above this threshold go to stderr
 
   So, if the value is `FATAL` then all error level of less degree i.e. INFO, WARNING, ERROR (incl FATAL) will go to stderr.
@@ -36,9 +40,11 @@
   or
     $ go run example.go -stderrthreshold=FATAL -log_dir=./log -v=2
   or
-    $ go run example.go -logtostderr=true // still wont print INFO
+    $ go run example.go -logtostderr // still wont print INFO
   or
-    $ go run example.go -logtostderr=true -v=2 // even -v=3 will print info logs as mentioned before
+    $ go run example.go -logtostderr -v=2 // even -v=3 will print info logs as mentioned before
+  or
+    $ go run example.go -log_dir='/Users/sourabhaggarwal/Desktop/' -v=2 // even -v=3 will print info logs as mentioned before but this time only error logs get printed on terminal and to see info logs we need to navigate to the log_dir and check the info file
   or
     $ go run example.go -v=3 -stderrthreshold=FATAL // this will not print anything as mentioned before.
   */

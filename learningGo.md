@@ -214,6 +214,22 @@ Variables declared by the statement are only in scope until the end of the if.
   */
   ```
 
+* **Defer in a block**: You may expect that a deferred func will run after a block ends but it does not, it only executes after the containing func ends.
+  ```go
+  func main() {
+    {
+      defer func() {
+        fmt.Println("block: defer runs")
+      }()
+      fmt.Println("block: ends")
+    }
+    fmt.Println("main: ends")
+  }
+  /* Output
+  block: ends
+  main: ends
+  block: defer runs */
+  ```
 * Go has pointers. A pointer holds the memory address of a value.
 
   The type *T is a pointer to a T value. Its zero value is nil.
