@@ -1,5 +1,3 @@
-Talked with Ishant 
-
 # Learning GoLang
 
 * ` import ("math/rand") ` By convention, the package name is the same as the last element of the import path. For instance, the "math/rand" package comprises files that begin with the statement package rand.
@@ -906,7 +904,7 @@ Other slices that share the same underlying array will see those changes.
     fmt.Println(msg)
   } 
 
-* Solution is to use *buffered channels*. Sends to a buffered channel block only when the buffer is full. Receives block when the buffer is empty.
+* Solution is to use *buffered channels*. Sends to a buffered channel block only when the buffer is full. Receives block when the buffer is empty. So if the above code is modified as `c := make(chan string, 1)` it will work. 
   ```go
     func main() {
     ch := make(chan int, 2)
