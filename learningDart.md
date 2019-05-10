@@ -351,238 +351,289 @@
   ```
 * If you don’t declare a constructor, a default constructor is provided for you. The default constructor has no arguments and invokes the no-argument constructor in the superclass.
 
-* Constructors aren’t inherited: Subclasses don’t inherit constructors from their superclass. A subclass that declares no constructors has only the default (no argument, no name) constructor. 
+* Constructors aren’t inherited: Subclasses don’t inherit constructors from their superclass. A subclass **that declares no constructors** (so if you are declaring a constructor don't have a default constructor) has only the default (no argument, no name) constructor. 
 
 * By default, a constructor *(any\*)* in a subclass calls the superclass’s unnamed, no-argument constructor. The superclass’s constructor is called at the beginning of the constructor body. If an initializer list is also being used, it executes before the superclass is called. In summary, the order of execution is as follows:
   1.    initializer list
   2.    superclass’s no-arg constructor
   3.    main class’s no-arg constructor
 
-If the superclass doesn’t have an unnamed, no-argument constructor, then you must manually call one of the constructors in the superclass. Specify the superclass constructor after a colon (:), just before the constructor body (if any).
-class Person {
-  String firstName;
+  If the superclass doesn’t have an unnamed, no-argument constructor, then you must manually call one of the constructors in the superclass. Specify the superclass constructor after a colon (:), just before the constructor body (if any).
+  ```dart
+  class Person {
+    String firstName;
 
-  Person.fromJson(Map data) {
-    print('in Person');
-  }
-}
-
-class Employee extends Person {
-  // Person does not have a default constructor;
-  // you must call super.fromJson(data).
-  Employee.fromJson(Map data) : super.fromJson(data) {
-    print('in Employee');
-  }
-}
-
-main() {
-  var emp = new Employee.fromJson({});
-
-  // Prints:
-  // in Person
-  // in Employee
-  if (emp is Person) {
-    // Type check
-    emp.firstName = 'Bob';
-  }
-  (emp as Person).firstName = 'Bob';
-}
---
-
-Operator overloading:
-class Vector {
-  final int x, y;
-
-  Vector(this.x, this.y);
-
-  Vector operator +(Vector v) => Vector(x + v.x, y + v.y);
-  Vector operator -(Vector v) => Vector(x - v.x, y - v.y);
-
-  // Operator == and hashCode not shown. For details, see note below.
-  // ···
-}
-if you override ==, you should also override Object’s hashCode getter.
-To detect or react whenever code attempts to use a non-existent method or instance variable, you can override noSuchMethod():
-
-class A {
-  // Unless you override noSuchMethod, using a
-  // non-existent member results in a NoSuchMethodError.
-  @override
-  void noSuchMethod(Invocation invocation) {
-    print('You tried to use a non-existent member: ' +
-        '${invocation.memberName}');
-  }
-}
-If your class produces objects that never change, you can make these objects compile-time constants. To do this, define a const constructor and make sure that all instance variables are final.
-
-class ImmutablePoint {
-  static final ImmutablePoint origin =
-      const ImmutablePoint(0, 0);
-
-  final num x, y;
-
-  const ImmutablePoint(this.x, this.y);
-}
-To make a method abstract, use a semicolon (;) instead of a method body:
-
-abstract class Doer {
-  // Define instance variables and methods...
-
-  void doSomething(); // Define an abstract method.
-}
-
-class EffectiveDoer extends Doer {
-  void doSomething() {
-    // Provide an implementation, so the method is not abstract here...
-  }
-}
-// This class is declared abstract and thus
-// can't be instantiated.
-abstract class AbstractContainer {
-  // Define constructors, fields, methods...
-
-  void updateChildren(); // Abstract method.
-}
-
-Sometimes a constructor’s only purpose is to redirect to another constructor in the same class. A redirecting constructor’s body is empty, with the constructor call appearing after a colon (:).
-
-class Point {
-  num x, y;
-
-  // The main constructor for this class.
-  Point(this.x, this.y);
-
-  // Delegates to the main constructor.
-  Point.alongXAxis(num x) : this(x, 0);
-}
-Use extends to create a subclass, and super to refer to the superclass:
-
-class Television {
-  void turnOn() {
-    _illuminateDisplay();
-    _activateIrSensor();
-  }
-  // ···
-}
-
-class SmartTelevision extends Television {
-  void turnOn() {
-    super.turnOn();
-    _bootNetworkInterface();
-    _initializeMemory();
-    _upgradeApps();
-  }
-  // ···
-}
-Subclasses can override instance methods, getters, and setters. You can use the @override annotation to indicate that you are intentionally overriding a member:
-
-class SmartTelevision extends Television {
-  @override
-  void turnOn() {...}
-  // ···
-}
-
-
-Enumerated types, often called enumerations or enums, are a special kind of class used to represent a fixed number of constant values
-enum Color { red, green, blue }
-
-Each value in an enum has an index getter, which returns the zero-based position of the value in the enum declaration. For example, the first value has index 0, and the second value has index 1.
-
-assert(Color.red.index == 0);
-assert(Color.green.index == 1);
-assert(Color.blue.index == 2);
-
-To get a list of all of the values in the enum, use the enum’s values constant.
-
-List<Color> colors = Color.values;
-assert(colors[2] == Color.blue);
-Mixins are a way of reusing a class’s code in multiple class hierarchies.
-
-To use a mixin, use the with keyword followed by one or more mixin names. The following example shows two classes that use mixins:
-
-class Musician extends Performer with Musical {
-  // ···
-}
-
-class Maestro extends Person
-    with Musical, Aggressive, Demented {
-  Maestro(String maestroName) {
-    name = maestroName;
-    canConduct = true;
-  }
-}
-
-To implement a mixin, create a class that extends Object, declares no constructors, and has no calls to super. For example:
-
-abstract class Musical {
-  bool canPlayPiano = false;
-  bool canCompose = false;
-  bool canConduct = false;
-
-  void entertainMe() {
-    if (canPlayPiano) {
-      print('Playing piano');
-    } else if (canConduct) {
-      print('Waving hands');
-    } else {
-      print('Humming to self');
+    Person.fromJson(Map data) {
+      print('in Person');
     }
   }
-}
-Static variables (class variables) are useful for class-wide state and constants:
 
-class Queue {
-  static const initialCapacity = 16;
-  // ···
-}
+  class Employee extends Person {
+    // Person does not have a default constructor;
+    // you must call super.fromJson(data).
+    Employee.fromJson(Map data) : super.fromJson(data) {
+      print('in Employee');
+    }
+  }
+  main() {
+    var emp = new Employee.fromJson({});
 
-void main() {
-  assert(Queue.initialCapacity == 16);
-}
-Static methods (class methods, just add static in front of that method) do not operate on an instance, and thus do not have access to this.
+    // Prints:
+    // in Person
+    // in Employee
+    if (emp is Person) {
+      // Type check
+      emp.firstName = 'Bob';
+    }
+    (emp as Person).firstName = 'Bob';
+  }
+  ```
+* Sometimes a constructor’s only purpose is to redirect to another constructor in the same class. A redirecting constructor’s body is empty, with the constructor call appearing after a colon (:).
+  ```dart
+  class Point {
+    num x, y;
 
+    // The main constructor for this class.
+    Point(this.x, this.y);
+
+    // Delegates to the main constructor.
+    Point.alongXAxis(num x) : this(x, 0);
+  }
+  ```
+
+* If your class produces objects that never change, you can make these objects compile-time constants. To do this, define a const constructor and make sure that all instance variables are final.
+  ```dart
+  class ImmutablePoint {
+    static final ImmutablePoint origin =
+        const ImmutablePoint(0, 0);
+
+    final num x, y;
+
+    const ImmutablePoint(this.x, this.y);
+  }
+  // Remember:
+  var a = const ImmutablePoint(1, 1); // Creates a constant
+  var b = ImmutablePoint(1, 1); // Does NOT create a constant
+  ```
+* Use the factory keyword when implementing a constructor that doesn’t always create a new instance of its class. For example, a factory constructor might return an instance from a cache, or it might return an instance of a subtype.
+
+  The following example demonstrates a factory constructor returning objects from a cache:
+  ```dart
+  class Logger {
+    final String name;
+    bool mute = false;
+
+    // _cache is library-private, thanks to
+    // the _ in front of its name.
+    static final Map<String, Logger> _cache =
+        <String, Logger>{};
+
+    factory Logger(String name) {
+      if (_cache.containsKey(name)) {
+        return _cache[name];
+      } else {
+        final logger = Logger._internal(name);
+        _cache[name] = logger;
+        return logger;
+      }
+    }
+
+    Logger._internal(this.name);
+
+    void log(String msg) {
+      if (!mute) print(msg);
+    }
+  }
+  // Note: Factory constructors have no access to this.
+  ```
+  Invoke a factory constructor just like you would any other constructor:
+  ```dart
+  var logger = Logger('UI');
+  logger.log('Button clicked');
+  ```
+* Instance, getter, and setter methods can be abstract, defining an interface but leaving its implementation up to other classes. Abstract methods can only exist in abstract classes.
+
+  To make a method abstract, use a semicolon (;) instead of a method body:
+  ```dart
+  abstract class Doer {
+    // Define instance variables and methods...
+
+    void doSomething(); // Define an abstract method.
+  }
+
+  class EffectiveDoer extends Doer {
+    void doSomething() {
+      // Provide an implementation, so the method is not abstract here...
+    }
+  } 
+  ```
+* An **abstract class**—a class that can’t be instantiated. Abstract classes are useful for defining interfaces, often with some implementation. If you want your abstract class to appear to be instantiable, define a factory constructor.
+* Every class implicitly defines an interface containing all the instance members of the class and of any interfaces it implements. If you want to create a class A that supports class B’s API without inheriting B’s implementation, class A should implement the B interface.
+
+  A class implements one or more interfaces by declaring them in an implements clause and then providing the APIs required by the interfaces. For example:
+  ```dart
+  // A person. The implicit interface contains greet().
+  class Person {
+    // In the interface, but visible only in this library.
+    final _name;
+
+    // Not in the interface, since this is a constructor.
+    Person(this._name);
+
+    // In the interface.
+    String greet(String who) => 'Hello, $who. I am $_name.';
+  }
+
+  // An implementation of the Person interface.
+  class Impostor implements Person {
+    get _name => '';
+
+    String greet(String who) => 'Hi $who. Do you know who I am?';
+  }
+
+  String greetBob(Person person) => person.greet('Bob');
+
+  void main() {
+    print(greetBob(Person('Kathy')));
+    print(greetBob(Impostor()));
+  }
+  ```
+  Here’s an example of specifying that a class implements multiple interfaces:
+  ```dart
+  class Point implements Comparable, Location {...}
+  ```
+* Use extends to create a subclass, and super to refer to the superclass.
+  ```dart
+  class Television {
+    void turnOn() {
+      _illuminateDisplay();
+      _activateIrSensor();
+    }
+    // ···
+  }
+
+  class SmartTelevision extends Television {
+    void turnOn() {
+      super.turnOn();
+      _bootNetworkInterface();
+      _initializeMemory();
+      _upgradeApps();
+    }
+    // ···
+  }
+  ```
+* Subclasses can override instance methods, getters, and setters. You can use the @override annotation to indicate that you are intentionally overriding a member. We can even override the binary operators.
+  ```dart
+  class SmartTelevision extends Television {
+    @override  // so as we saw in the above example this is optional. Even when overriding we can access supers turnOn.
+    void turnOn() {...}
+    // ···
+  }
+  ```
+
+  Operator overloading:
+  ```dart
+  class Vector {
+    final int x, y;
+
+    Vector(this.x, this.y);
+
+    Vector operator +(Vector v) => Vector(x + v.x, y + v.y);
+    Vector operator -(Vector v) => Vector(x - v.x, y - v.y);
+
+    // Operator == and hashCode not shown. For details, see note below.
+    // ···
+  }
+  ```
+  if you override ==, you should also override Object’s hashCode getter.
+
+* To detect or react whenever code attempts to use a non-existent method or instance variable, you can override noSuchMethod():
+  ```dart
+  class A {
+    // Unless you override noSuchMethod, using a
+    // non-existent member results in a NoSuchMethodError.
+    @override
+    void noSuchMethod(Invocation invocation) {
+      print('You tried to use a non-existent member: ' +
+          '${invocation.memberName}');
+    }
+  }
+  ```
+* Use the static keyword to implement class-wide variables and methods.
+
+  Static variables (class variables) are useful for class-wide state and constants:
+  ```dart
+  class Queue {
+    static const initialCapacity = 16;
+    // ···
+  }
+
+  void main() {
+    assert(Queue.initialCapacity == 16);
+  }
+  ```
+  Static variables aren’t initialized until they’re used.
+  
+  Static methods (class methods) do not operate on an instance, and thus do not have access to this. For example:
+  ```dart
+  class Point {
+    num x, y;
+    Point(this.x, this.y);
+
+    static num distanceBetween(Point a, Point b) {
+      var dx = a.x - b.x;
+      var dy = a.y - b.y;
+      return sqrt(dx * dx + dy * dy);
+    }
+  }
+
+  void main() {
+    var a = Point(2, 2);
+    var b = Point(4, 4);
+    var distance = Point.distanceBetween(a, b);
+    assert(2.8 < distance && distance < 2.9);
+    print(distance);
+  }
+  ```
 * Generics are same as templates, example:
   ```dart
   abstract class Cache<T> {
     T getByKey(String key);
     void setByKey(String key, T value);
   }
-  var names = <String>['Seth', 'Kathy', 'Lars']; // being nice :)
-  var pages = <String, String>{
-    'index.html': 'Homepage',
-    'robots.txt': 'Hints for web robots',
-    'humans.txt': 'We are people, not machines'
-  };
   ```
-* Dart generic types are reified, which means that they carry their type information around at runtime. For example, you can test the type of a collection:
-
+* When implementing a generic type, you might want to limit the types of its parameters. You can do this using extends.
   ```dart
-  var names = List<String>();
-  names.addAll(['Seth', 'Kathy', 'Lars']);
-  print(names is List<String>); // true
+  class Foo<T extends SomeBaseClass> {
+    // Implementation goes here...
+    String toString() => "Instance of 'Foo<$T>'";
+  }
+
+  class Extender extends SomeBaseClass {...}
   ```
-When implementing a generic type, you might want to limit the types of its parameters. You can do this using extends.
-
-class Foo<T extends SomeBaseClass> {
-  // Implementation goes here...
-  String toString() => "Instance of 'Foo<$T>'";
-}
-
-class Extender extends SomeBaseClass {...}
-
-It’s OK to use SomeBaseClass or any of its subclasses as generic argument:
-
-var someBaseClassFoo = Foo<SomeBaseClass>();
-var extenderFoo = Foo<Extender>();
-
-It’s also OK to specify no generic argument:
-
-var foo = Foo();
-print(foo); // Instance of 'Foo<SomeBaseClass>'
-
-Specifying any non-SomeBaseClass type results in an error:
-/* var foo = Foo<Object>(); // uncommenting will give error */
-Initially, Dart’s generic support was limited to classes. A newer syntax, called generic methods, allows type arguments on methods and functions
+  It’s OK to use SomeBaseClass or any of its subclasses as generic argument:
+  ```dart
+  var someBaseClassFoo = Foo<SomeBaseClass>();
+  var extenderFoo = Foo<Extender>();
+  ```
+  It’s also OK to specify no generic argument:
+  ```dart
+  var foo = Foo();
+  print(foo); // Instance of 'Foo<SomeBaseClass>'
+  ```
+  Specifying any non-SomeBaseClass type results in an error:
+  ```dart
+  var foo = Foo<Object>();
+  ```
+* Generic methods
+  ```dart
+  T first<T>(List<T> ts) {
+    // Do some initial work or error checking, then...
+    T tmp = ts[0];
+    // Do some additional checking or processing...
+    return tmp;
+  }
+  ```
 * Libraries not only provide APIs, but are a unit of privacy: identifiers that start with an underscore (_) are visible only inside the library. Every Dart app is a library, even if it doesn’t use a library directive.
 
 * If you import two libraries that have conflicting identifiers, then you can specify a prefix for one or both libraries.
