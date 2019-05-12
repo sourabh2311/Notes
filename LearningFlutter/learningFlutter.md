@@ -111,7 +111,10 @@
     @override
     Widget build(BuildContext context) {
       return Center(
-          child: Container(
+          // A bit about container widget: A convenience widget that combines common painting, positioning, and sizing widgets.
+  
+          // A container first surrounds the child with padding (inflated by any borders present in the decoration) and then applies additional constraints to the padded extent (incorporating the width and height as constraints, if either is non-null). The container is then surrounded by additional empty space described from the margin.
+            child: Container(
               // for working with fonts, create a new folder at application root named 'fonts' then put your downloaded fonts there and add their details in pubspec.yaml. Note: for regular font there is no need to define weight but for italic and bold find weight when downloading the font and mention their style as well (not need for regular font)
               // If we hadn't used Center widget then these width and height settings wouldn't work. But after using Center they would work, also margin is distance between two widgets and padding is like distance from boundary. Similary we have EdgeInsets.all() to get margin/padding from everywhere
     //		    width: 200.0,
@@ -121,6 +124,7 @@
               padding: EdgeInsets.only(left: 10.0, top: 40.0),
               alignment: Alignment.center,
               color: Colors.deepPurple,
+              // Better than column is list as with column you might get errors as of overflowing (screen hight not sufficient).
               child: Column(
                 // Column is like |r1|
                 //                |r2|
@@ -364,3 +368,263 @@
 
   <img src="image4.png" alt="drawing" width="200"/>
   <img src="image5.png" alt="drawing" width="200"/>
+
+## Lesson 3
+* States, Dropdown and Forms!
+
+  Basically after the change of state, older widget is destroyed and is recreated.
+  
+  ```dart
+  import 'package:flutter/material.dart';
+
+  void main() {
+    runApp(MaterialApp(
+      debugShowCheckedModeBanner: false,
+      title: 'Simple Interest Calculator App',
+      home: SIForm(),
+      // making our theme
+      theme: ThemeData(
+          brightness: Brightness.dark, // will set the background
+          primaryColor: Colors.indigo, 
+          accentColor: Colors.indigoAccent), // will set the scroll limit hover color
+    ));
+  }
+
+  class SIForm extends StatefulWidget {
+    // Must override
+    @override
+    State<StatefulWidget> createState() {
+      return _SIFormState();
+    }
+  }
+
+  class _SIFormState extends State<SIForm> {
+
+    var _formKey = GlobalKey<FormState>();
+
+    var _currencies = ['Rupees', 'Dollars', 'Pounds'];
+    final double _minimumPadding = 5.0;
+
+    var _currentItemSelected = '';
+
+    // can use initState to setup some values.
+    @override
+    void initState() {
+      super.initState();
+      _currentItemSelected = _currencies[0];
+    }
+
+    TextEditingController principalController = TextEditingController();
+    TextEditingController roiController = TextEditingController();
+    TextEditingController termController = TextEditingController();
+    // three inputs, three controllers. Controllers help in getting back the value
+    var displayResult = '';
+
+    @override
+    Widget build(BuildContext context) {
+      TextStyle textStyle = Theme.of(context).textTheme.title;
+      // getting our themes textStyle
+      return Scaffold(
+  //			resizeToAvoidBottomPadding: false,
+        appBar: AppBar(
+          title: Text('Simple Interest Calculator'),
+        ),
+
+        body: Form(
+          key: _formKey,
+          // margin not allowed in Form, so wrapped this in Padding
+          child: Padding(
+              padding: EdgeInsets.all(_minimumPadding * 2),
+              child: ListView(
+                children: <Widget>[
+                  getImageAsset(),
+                  Padding(
+                      padding: EdgeInsets.only(
+                          top: _minimumPadding, bottom: _minimumPadding),
+                          // converted TextField -> (to) TextFromField
+                      child: TextFormField(
+                        keyboardType: TextInputType.number,
+                        style: textStyle,
+                        controller: principalController,
+                        validator: (String value) {
+                          // Checking
+                          if (value.isEmpty) {
+                            return 'Please enter principal amount';
+                          }
+                        },
+                        decoration: InputDecoration(
+                            labelText: 'Principal',
+                            hintText: 'Enter Principal e.g. 12000',
+                            labelStyle: textStyle,
+                            // color for our error
+                            errorStyle: TextStyle(
+                              color: Colors.yellowAccent,
+                              fontSize: 15.0
+                            ),
+                            // giving good border
+                            border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(5.0))),
+                      )),
+                  Padding(
+                      padding: EdgeInsets.only(
+                          top: _minimumPadding, bottom: _minimumPadding),
+                      child: TextFormField(
+                        keyboardType: TextInputType.number,
+                        style: textStyle,
+                        controller: roiController,
+                        validator: (String value) {
+                          if (value.isEmpty) {
+                            return 'Please enter rate of interest';
+                          }
+                        },
+                        decoration: InputDecoration(
+                            labelText: 'Rate of Interest',
+                            hintText: 'In percent',
+                            labelStyle: textStyle,
+                            errorStyle: TextStyle(
+                              color: Colors.yellowAccent,
+                              fontSize: 15.0
+                            ),
+                            border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(5.0))),
+                      )),
+                  Padding(
+                      padding: EdgeInsets.only(
+                          top: _minimumPadding, bottom: _minimumPadding),
+                      child: Row(
+                        children: <Widget>[
+                          Expanded(
+                              child: TextFormField(
+                            keyboardType: TextInputType.number,
+                            style: textStyle,
+                            controller: termController,
+                            validator: (String value) {
+                              if (value.isEmpty) {
+                                return 'Please enter time';
+                              }
+                            },
+                            decoration: InputDecoration(
+                                labelText: 'Term',
+                                hintText: 'Time in years',
+                                labelStyle: textStyle,
+                                errorStyle: TextStyle(
+                                  color: Colors.yellowAccent,
+                                  fontSize: 15.0
+                                ),
+                                border: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(5.0))),
+                          )),
+                          Container(
+                            width: _minimumPadding * 5,
+                          ),
+                          Expanded(
+                              child: DropdownButton<String>(
+                // List.map will iterate over all the list items and executed the code
+                            items: _currencies.map((String value) {
+                              return DropdownMenuItem<String>(
+                                value: value,
+                                child: Text(value),
+                              );
+                            }).toList(),
+                            value: _currentItemSelected,
+                            onChanged: (String newValueSelected) {
+                              // Your code to execute, when a menu item is selected from dropdown
+                              // must setState
+                              _onDropDownItemSelected(newValueSelected); // making our code modular :)
+                            },
+                          ))
+                        ],
+                      )),
+                  Padding(
+                      padding: EdgeInsets.only(
+                          bottom: _minimumPadding, top: _minimumPadding),
+                      child: Row(
+                        children: <Widget>[
+                          Expanded(
+                            child: RaisedButton(
+                              color: Theme.of(context).accentColor,
+                              textColor: Theme.of(context).primaryColorDark,
+                              child: Text(
+                                'Calculate',
+                                textScaleFactor: 1.5,
+                              ),
+                              onPressed: () {
+                                setState(() {
+                                  if (_formKey.currentState.validate()) {
+                                    this.displayResult = _calculateTotalReturns();
+                                  }
+                                });
+                              },
+                            ),
+                          ),
+                          Expanded(
+                            child: RaisedButton(
+                              color: Theme.of(context).primaryColorDark,
+                              textColor: Theme.of(context).primaryColorLight,
+                              child: Text(
+                                'Reset',
+                                textScaleFactor: 1.5,
+                              ),
+                              onPressed: () {
+                                setState(() {
+                                  _reset();
+                                });
+                              },
+                            ),
+                          ),
+                        ],
+                      )),
+                  Padding(
+                    padding: EdgeInsets.all(_minimumPadding * 2),
+                    child: Text(
+                      this.displayResult,
+                      style: textStyle,
+                    ),
+                  )
+                ],
+              )),
+        ),
+      );
+    }
+
+    Widget getImageAsset() {
+      AssetImage assetImage = AssetImage('images/money.png');
+      Image image = Image(
+        image: assetImage,
+        width: 125.0,
+        height: 125.0,
+      );
+
+      return Container(
+        child: image,
+        margin: EdgeInsets.all(_minimumPadding * 10),
+      );
+    }
+
+    void _onDropDownItemSelected(String newValueSelected) {
+      setState(() {
+        this._currentItemSelected = newValueSelected;
+      });
+    }
+
+    String _calculateTotalReturns() {
+      double principal = double.parse(principalController.text);
+      double roi = double.parse(roiController.text);
+      double term = double.parse(termController.text);
+
+      double totalAmountPayable = principal + (principal * roi * term) / 100;
+
+      String result =
+          'After $term years, your investment will be worth $totalAmountPayable $_currentItemSelected';
+      return result;
+    }
+
+    void _reset() {
+      principalController.text = '';
+      roiController.text = '';
+      termController.text = '';
+      displayResult = '';
+      _currentItemSelected = _currencies[0];
+    }
+  }
+  ```

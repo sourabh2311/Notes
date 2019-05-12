@@ -671,3 +671,39 @@
   ```
   In the preceding code, the await keyword pauses execution until the library is loaded.
   You can invoke loadLibrary() multiple times on a library without problems. The library is loaded only once.
+* 
+  ```dart
+  import 'dart:async';
+
+
+  main() {
+    print("Main starts");
+    printFileContent();
+    print("Main ends");
+  }
+
+  printFileContent() async { // we must add async if we are using await
+    String fileContent = await downloadFile(); // will wait until the file is ready
+    print("FC: $fileContent");
+  }
+  /* 
+  // Following is equivalent
+  printFileContent() {
+    Future<String> fileContent = downloadFile();
+    fileContent.then((resultString) {
+      print("FC: $fileContent");
+    })
+  }
+  */
+
+  Future<String> downloadFile() {
+    return Future.delayed(Duration(seconds: 6), () {
+      return "My FC";
+    });
+  }
+  /* output:
+  Main starts
+  Main ends
+  FC: My FC // got printed after 6 seconds
+  */
+  ```
