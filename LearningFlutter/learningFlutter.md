@@ -111,9 +111,6 @@
     @override
     Widget build(BuildContext context) {
       return Center(
-          // A bit about container widget: A convenience widget that combines common painting, positioning, and sizing widgets.
-  
-          // A container first surrounds the child with padding (inflated by any borders present in the decoration) and then applies additional constraints to the padded extent (incorporating the width and height as constraints, if either is non-null). The container is then surrounded by additional empty space described from the margin.
             child: Container(
               // for working with fonts, create a new folder at application root named 'fonts' then put your downloaded fonts there and add their details in pubspec.yaml. Note: for regular font there is no need to define weight but for italic and bold find weight when downloading the font and mention their style as well (not need for regular font)
               // If we hadn't used Center widget then these width and height settings wouldn't work. But after using Center they would work, also margin is distance between two widgets and padding is like distance from boundary. Similary we have EdgeInsets.all() to get margin/padding from everywhere
@@ -628,3 +625,44 @@
     }
   }
   ```
+
+
+* **Container widget**: A convenience widget that combines common painting, positioning, and sizing widgets.
+* Container just has alignment (Align the child within the container like Alignment.center), child, constraints (additional constraints to apply to the **child**), **decoration** (The decoration to paint behind the child), **foregroundDecoration** (The decoration to pain in front of the child), margin (Empty space to surround the decoration of the child), padding (Empty space to inscribe inside the decoration. The child, if any, is placed inside this padding), transform (The transformation matrix to apply before painting the container), color (color of the container), width, height. 
+* Container has **decoration** property which is absent in Scaffold, so it it better to wrap Scaffold insider Container.
+* About Container's layout (imp):
+  * If the widget has no child, no height, no width, no constraints, and the parent provides unbounded constraints, then Container tries to size as small as possible.
+
+  * If the widget has no child and no alignment, but a height, width, or constraints are provided, then the Container tries to be as small as possible given the combination of those constraints and the parent's constraints.
+
+  * If the widget has no child, no height, no width, no constraints, and no alignment, but the parent provides bounded constraints, then Container expands to fit the constraints provided by the parent.
+
+  * If the widget has an alignment, and the parent provides unbounded constraints, then the Container tries to size itself around the child.
+
+  * If the widget has an alignment, and the parent provides bounded constraints, then the Container tries to expand to fit the parent, and then positions the child within itself as per the alignment.
+
+  * Otherwise, the widget has a child but no height, no width, no constraints, and no alignment, and the Container passes the constraints from the parent to the child and sizes itself to match the child.
+* BoxDecoration has 
+  * backgroundBlendMode - The blend mode applied to the color or gradient background of the box.
+  * border - A border to draw above the background color, gradient, or image. 
+  * borderRadius - If non-null, the corners of this box are rounded by this BorderRadius.
+  * boxShadow - A list of shadows cast by this box behind the box. 
+  * color - The color to fill in the background of the box. 
+  * gradient - A gradient to use when filling the box. 
+    * Can use LinearGradient which has begin, end, 2 colors and a tileMode.
+    * TileMode enum defines what happens at the edge of the gradient.
+
+      A gradient is defined along a finite inner area. In the case of a linear gradient, it's between the parallel lines that are orthogonal to the line drawn between two points. In the case of radial gradients, it's the disc that covers the circle centered on a particular point up to a given radius.
+
+      This enum is used to define how the gradient should paint the regions outside that defined inner area.
+
+      See more info [here](https://docs.flutter.io/flutter/dart-ui/TileMode-class.html)
+  * image - An image to paint above the background color or gradient.
+  * isComplex (bool) - Whether this decoration is complex enough to benefit from caching its painting.
+  * padding - Returns the insets to apply when using this decoration on a box that has contents, so that the contents do not overlap the edges of the decoration. For example, if the decoration draws a frame around its edge, the padding would return the distance by which to inset the children so as to not overlap the frame.
+  * shape - The shape to fill the background color, gradient, and image into and to cast as the boxShadow.
+* Those apps like Youtube which have Bottom Navigation Bar can be implemented in Scaffold. But Bottom Navigation is best used when you have three to five top-level navigation items of similar importance. For more than 5 screens use Navigation Drawer.
+* Its better to at least have a look at the properties of the following:
+  * [IconButton](https://docs.flutter.io/flutter/material/IconButton-class.html)
+  * https://docs.flutter.io/flutter/material/AppBar-class.html
+  * https://docs.flutter.io/flutter/widgets/Positioned-class.html
