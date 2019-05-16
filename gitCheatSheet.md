@@ -1,6 +1,19 @@
 ### Creating a repo
-* Better to create a repo on github and then clone it using ssh
 * setup ssh on ur machine, follow this link: https://help.github.com/en/articles/connecting-to-github-with-ssh or basically follow this: https://www.youtube.com/watch?v=HfTXHrWMGVY
+* Two methods to create a repo:
+  * Method 1:-
+    * to create a repo on github and then clone it using ssh
+  * Method 2:- To create a repo from an existing project and then connect it to github
+    * Go into the directory containing the project. 
+    * Type `git init`.
+    * Type `git add .`.
+    * Type `git commit`
+    * Go to github.
+    * Click the new repository button in the top-right. You’ll have an option there to initialize the repository with a README file, but I don’t.
+    * Click the “Create repository” button.
+    * `git remote add origin git@github.com:username/new_repo.git`
+    * `git push -u origin master`
+* `git checkout -b sourabh/neoLog/zap` - To create a new branch and then checkout to it
 * `git add .` - To have all your files staged
 * `git commit -m "msg"` - To commit
 * `git push` - To push

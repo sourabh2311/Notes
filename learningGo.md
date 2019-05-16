@@ -561,6 +561,9 @@ Other slices that share the same underlying array will see those changes.
     return float64(f)
   }
 
+  type MyType struct{
+    MyFloat
+  }
   func main() {
     f := MyFloat(-math.Sqrt2)
     fmt.Println(f.Abs())

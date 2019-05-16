@@ -16,7 +16,7 @@
 
   Whether an individual call to V generates a log record depends on the setting of the -v and --vmodule flags; both are off by default. If the level in the call to V is at least the value of -v, or of -vmodule for the source file containing the call, the V call will log.
 
-  Basically -v thing should be >= V thing
+  Basically -v thing should be >= V thing for logging of INFO to happen
 
 * `-logtostderr` log to standard error instead of files
 * `-alsologtostderr` log to standard error as well as files
@@ -86,3 +86,10 @@
   ```
 
 ## **logrus**
+
+
+## **zap**
+
+* Putting atomic level as say info, implys that all log messages will be printed.
+* Putting atomic level as say error, implys only error and fatal gets printed.
+* Printing fatal means termination of software.
