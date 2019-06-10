@@ -17,5 +17,11 @@ func main() {
 	log.SetOutput(f) // can put os.Stdout
 	log.Info("A walrus appears")
 	log.Info("Checking this again")
-	log.Warn("Warning")
+	log.Warnf("Warning")
+	log.Warningf("Warning")
+	log.Error("error1")
+	log.Error("error2")
+	log.Errorln("error3")
+	log.Errorln("error4")
+
 }

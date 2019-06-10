@@ -145,3 +145,17 @@ func main() {
 }
 ```
 
+## Implementation at Avi
+
+* It's almost the same as *logger3* just that as we have wrapped everything inside a package, thus, it is therefore required to modify 
+
+	`	logger := zap.New(core, zap.AddCaller())	`
+
+	to
+
+	`	logger := zap.New(core, zap.AddCaller(), zap.AddCallerSkip(1))	`
+
+	So as to show *that* caller which is invoking the suitable method of our package. 
+* Due to simplicity of `SugaredLogger` *(as evident in `logger1` where its details are as well explained)*, we have decided to stick with it.
+
+To see it head over to avi-dev/go/src/avi/infra/avilog.go 

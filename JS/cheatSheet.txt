@@ -1,0 +1,2 @@
+https://htmlcheatsheet.com/js/
+Just follow that standard cheat sheet, remember that we had proto things but every that thing can be avoided by using 'Class'. Also we have templates (that string formatting thing) 

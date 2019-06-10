@@ -1,29 +1,28 @@
 # Learning GoLang
 
-* ` import ("math/rand") ` By convention, the package name is the same as the last element of the import path. For instance, the "math/rand" package comprises files that begin with the statement package rand.
+- `import ("math/rand")` By convention, the package name is the same as the last element of the import path. For instance, the "math/rand" package comprises files that begin with the statement package rand.
 
-* Note: The environment in which these programs are executed is deterministic, so each time you run the example program rand.Intn will return the same number.
+- Note: The environment in which these programs are executed is deterministic, so each time you run the example program rand.Intn will return the same number.
 
-* In Go, a name is exported if it begins with a capital letter. For example, Pizza is an exported name, as is Pi, which is exported from the math package. When importing a package, you can refer only to its exported names. Any "unexported" names are not accessible from outside the package.
+- In Go, a name is exported if it begins with a capital letter. For example, Pizza is an exported name, as is Pi, which is exported from the math package. When importing a package, you can refer only to its exported names. Any "unexported" names are not accessible from outside the package.
 
-* When two or more consecutive named function parameters share a type, you can omit the type from all but the last. So we can short (x int, y int) to (x, y int)
+- When two or more consecutive named function parameters share a type, you can omit the type from all but the last. So we can short (x int, y int) to (x, y int)
 
-* A function can return any number of results. ` func swap(x, y string) (string, string) {
-	return y, x
-} `
+- A function can return any number of results. `func swap(x, y string) (string, string) { return y, x }`
 
-* Go's return values may be named. If so, they are treated as variables defined at the top of the function. These names should be used to document the meaning of the return values. A return statement without arguments returns the named return values. This is known as a "naked" return. Naked return statements should be used only in short functions, as with the example shown here. They can harm readability in longer functions. 
+- Go's return values may be named. If so, they are treated as variables defined at the top of the function. These names should be used to document the meaning of the return values. A return statement without arguments returns the named return values. This is known as a "naked" return. Naked return statements should be used only in short functions, as with the example shown here. They can harm readability in longer functions.
   ```go
   func split(sum int) (x, y int) {
     x = sum * 4 / 9
     y = sum - x
     return
-  } 
+  }
   ```
-* The var statement declares a list of variables; as in function argument lists, the type is last.
+- The var statement declares a list of variables; as in function argument lists, the type is last.
 
-* A var declaration can include initializers, one per variable.
+- A var declaration can include initializers, one per variable.
   If an initializer is present, the type can be omitted; the variable will take the type of the initializer.
+
   ```go
   var i, j int = 1, 2
   func main() {
@@ -32,10 +31,11 @@
   }
   ```
 
-* Inside a function, the := short assignment statement can be used in place of a var declaration with implicit type.
-Outside a function, every statement begins with a keyword (var, func, and so on) and so the := construct is not available.
+- Inside a function, the := short assignment statement can be used in place of a var declaration with implicit type.
+  Outside a function, every statement begins with a keyword (var, func, and so on) and so the := construct is not available.
 
-* Go's basic types are
+- Go's basic types are
+
   ```
   bool
 
@@ -53,10 +53,11 @@ Outside a function, every statement begins with a keyword (var, func, and so on)
 
   complex64 complex128
   ```
+
   ```go
   import (
-	"fmt"
-	"math/cmplx"
+  "
+  "
   )
 
   var (
@@ -71,11 +72,12 @@ Outside a function, every statement begins with a keyword (var, func, and so on)
     fmt.Printf("Type: %T Value: %v\n", z, z)
   }
   ```
+
   The example shows variables of several types, and also that variable declarations may be "factored" into blocks, as with import statements.
 
   The int, uint, and uintptr types are usually 32 bits wide on 32-bit systems and 64 bits wide on 64-bit systems. When you need an integer value you should use int unless you have a specific reason to use a sized or unsigned integer type.
 
-* Variables declared without an explicit initial value are given their zero value.
+- Variables declared without an explicit initial value are given their zero value.
 
   The zero value is:
 
@@ -85,9 +87,10 @@ Outside a function, every statement begins with a keyword (var, func, and so on)
 
   "" (the empty string) for strings.
 
-* The expression T(v) converts the value v to the type T.
+- The expression T(v) converts the value v to the type T.
 
   Some numeric conversions:
+
   ```go
   var i int = 42
   var f float64 = float64(i)
@@ -100,13 +103,13 @@ Outside a function, every statement begins with a keyword (var, func, and so on)
 
   Unlike in C, in Go assignment between items of different type requires an explicit conversion.
 
-* Constants are declared like variables, but with the const keyword.
+- Constants are declared like variables, but with the const keyword.
 
   Constants can be character, string, boolean, or numeric values.
 
   Constants cannot be declared using the := syntax.
 
-* **Numeric Constants** are high-precision values.
+- **Numeric Constants** are high-precision values.
 
   An untyped constant takes the type needed by its context.
 
@@ -127,23 +130,25 @@ Outside a function, every statement begins with a keyword (var, func, and so on)
     fmt.Println(needFloat(Big))
   }
   ```
+
   Doing needInt(Big) will produce an error.
 
-* Go has only one looping construct, the for loop. Syntax: `for i := 0(optional); i < 10; i++(optional) { // do something }`
+- Go has only one looping construct, the for loop. Syntax: `for i := 0(optional); i < 10; i++(optional) { // do something }`
 
-* You can drop the semicolons: C's while is spelled for in Go. 
+- You can drop the semicolons: C's while is spelled for in Go.
   ```go
   for sum < 1000 {
-		sum += sum
-	}
+  m
+  }
   ```
-* ```go
+- ```go
   for { // If you omit the loop condition it loops forever, so an infinite loop is compactly expressed.
   }
   // remember that go has 'break' just like other languages.
   ```
-* Like for, the if statement can start with a short statement to execute before the condition.
-Variables declared by the statement are only in scope until the end of the if.
+- Like for, the if statement can start with a short statement to execute before the condition.
+  Variables declared by the statement are only in scope until the end of the if.
+
   ```go
   func pow(x, n, lim float64) float64 {
     if v := math.Pow(x, n); v < lim {
@@ -153,26 +158,26 @@ Variables declared by the statement are only in scope until the end of the if.
   }
   ```
 
-* A switch statement is a shorter way to write a sequence of if - else statements. It runs the first case whose value is equal to the condition expression.
+- A switch statement is a shorter way to write a sequence of if - else statements. It runs the first case whose value is equal to the condition expression.
 
   Go's switch is like the one in C, C++, Java, JavaScript, and PHP, except that Go only runs the selected case, not all the cases that follow. In effect, the break statement that is needed at the end of each case in those languages is provided automatically in Go. Another important difference is that Go's switch cases need not be constants, and the values involved need not be integers.
 
-* Switch without a condition is the same as switch true.
+- Switch without a condition is the same as switch true.
 
   This construct can be a clean way to write long if-then-else chains.
 
   ```go
   switch {
-	case t.Hour() < 12:
-		fmt.Println("Good morning!")
-	case t.Hour() < 17:
-		fmt.Println("Good afternoon.")
-	default:
-		fmt.Println("Good evening.")
-	}
+  :
+  )
+  :
+  )
+  :
+  )
+  }
   ```
 
-* A **defer** statement defers the execution of a function until the surrounding function returns.
+- A **defer** statement defers the execution of a function until the surrounding function returns.
 
   The deferred call's arguments are evaluated immediately, but the function call is not executed until the surrounding function returns.
 
@@ -188,17 +193,17 @@ Variables declared by the statement are only in scope until the end of the if.
 
   ```
 
-* Deferred function calls are pushed onto a stack. When a function returns, its deferred calls are executed in last-in-first-out order.
+- Deferred function calls are pushed onto a stack. When a function returns, its deferred calls are executed in last-in-first-out order.
 
   ```go
   fmt.Println("counting")
 
-	for i := 0; i < 10; i++ {
-		defer fmt.Println(i)
-	}
+  {
+  )
+  }
 
   fmt.Println("done")
-  /* 
+  /*
     counting
     done
     9
@@ -210,11 +215,11 @@ Variables declared by the statement are only in scope until the end of the if.
     3
     2
     1
-    0 
+    0
   */
   ```
 
-* **Defer in a block**: You may expect that a deferred func will run after a block ends but it does not, it only executes after the containing func ends.
+- **Defer in a block**: You may expect that a deferred func will run after a block ends but it does not, it only executes after the containing func ends.
   ```go
   func main() {
     {
@@ -230,30 +235,33 @@ Variables declared by the statement are only in scope until the end of the if.
   main: ends
   block: defer runs */
   ```
-* Go has pointers. A pointer holds the memory address of a value.
+- Go has pointers. A pointer holds the memory address of a value.
 
-  The type *T is a pointer to a T value. Its zero value is nil.
+  The type \*T is a pointer to a T value. Its zero value is nil.
 
   ```go
   var p *int
   ```
+
   The & operator generates a pointer to its operand.
 
   ```go
   i := 42
   p = &i
   ```
-  The * operator denotes the pointer's underlying value.
+
+  The \* operator denotes the pointer's underlying value.
 
   ```go
   fmt.Println(*p) // read i through the pointer p
   *p = 21         // set i through the pointer p
   ```
+
   This is known as "dereferencing" or "indirecting".
 
   Unlike C, Go has no pointer arithmetic.
 
-* ```go
+- ```go
   type Vertex struct {
     X int
     Y int
@@ -282,7 +290,7 @@ Variables declared by the statement are only in scope until the end of the if.
 
   ```
 
-* ```go
+- ```go
   // arrays
   func main() {
     var a [2]string
@@ -291,19 +299,19 @@ Variables declared by the statement are only in scope until the end of the if.
     fmt.Println(a[0], a[1]) // Hello World
     fmt.Println(a) // [Hello World]
 
-    primes := [6]int{2, 3, 5, 7, 11, 13} 
+    primes := [6]int{2, 3, 5, 7, 11, 13}
     fmt.Println(primes) // [2 3 5 7 11 13]
     var s []int = primes[1:4] // slice! (Note that 4th (high) element is excluded)
     fmt.Println(s)
   }
   ```
 
-* Slices are like references to arrays.
-A slice does not store any data, it just describes a section of an underlying array.
-Changing the elements of a slice modifies the corresponding elements of its underlying array.
-Other slices that share the same underlying array will see those changes.
+- Slices are like references to arrays.
+  A slice does not store any data, it just describes a section of an underlying array.
+  Changing the elements of a slice modifies the corresponding elements of its underlying array.
+  Other slices that share the same underlying array will see those changes.
 
-* A slice literal is like an array literal without the length.
+- A slice literal is like an array literal without the length.
 
   This is an array literal:
 
@@ -313,10 +321,12 @@ Other slices that share the same underlying array will see those changes.
 
   []bool{true, true, false}
 
-* For the array
+- For the array
+
   ```go
   var a [10]int
   ```
+
   these slice expressions are equivalent:
 
   ```go
@@ -326,7 +336,7 @@ Other slices that share the same underlying array will see those changes.
   a[:]
   ```
 
-* A slice has both a length and a capacity.
+- A slice has both a length and a capacity.
 
   The length of a slice is the number of elements it contains.
 
@@ -336,16 +346,16 @@ Other slices that share the same underlying array will see those changes.
 
   You can extend a slice's length by re-slicing it, provided it has sufficient capacity.
 
-* 
-  ```go
+- ```go
   var s []int
-	fmt.Println(s, len(s), cap(s)) // [] 0 0
-	if s == nil {
-		fmt.Println("nil!") // nil!
+  0
+  {
+  !
   }
   ```
 
-* The make function allocates a zeroed array and returns a slice that refers to that array
+- The make function allocates a zeroed array and returns a slice that refers to that array
+
   ```go
   func main() {
     a := make([]int, 5)
@@ -374,24 +384,25 @@ Other slices that share the same underlying array will see those changes.
   */
   ```
 
-* Slices can contain any type, including other slices.
+- Slices can contain any type, including other slices.
+
   ```go
   // Create a tic-tac-toe board.
-	board := [][]string{
-		[]string{"_", "_", "_"},
-		[]string{"_", "_", "_"},
-		[]string{"_", "_", "_"},
-	}
+  {
+  ,
+  ,
+  ,
+  }
 
-	// The players take turns.
-	board[0][0] = "X"
-	board[2][2] = "O"
-	board[1][2] = "X"
-	board[1][0] = "O"
-	board[0][2] = "X"
+  .
+  "
+  "
+  "
+  "
+  "
 
-	for i := 0; i < len(board); i++ {
-		fmt.Printf("%s\n", strings.Join(board[i], " "))
+  {
+  )
   }
   /* -output-
   X _ X
@@ -400,8 +411,8 @@ Other slices that share the same underlying array will see those changes.
   */
   ```
 
-* **Appending to a slice** 
-  
+- **Appending to a slice**
+
   `func append(s []T, vs ...T) []T`
 
   The first parameter s of append is a slice of type T, and the rest are T values to append to the slice.
@@ -410,7 +421,8 @@ Other slices that share the same underlying array will see those changes.
 
   If the backing array of s is too small to fit all the given values a bigger array will be allocated. The returned slice will point to the newly allocated array
 
-* **Range**
+- **Range**
+
   ```go
   var pow = []int{1, 2, 4, 8, 16, 32, 64, 128}
 
@@ -421,7 +433,7 @@ Other slices that share the same underlying array will see those changes.
   }
   ```
 
-* You can skip the index or value by assigning to _.
+- You can skip the index or value by assigning to \_.
 
   `for i, _ := range pow`
 
@@ -431,13 +443,13 @@ Other slices that share the same underlying array will see those changes.
 
   `for i := range pow`
 
-* **Maps** A map maps keys to values.
+- **Maps** A map maps keys to values.
 
   The zero value of a map is nil. A nil map has no keys, nor can keys be added.
 
   The make function returns a map of the given type, initialized and ready for use.
 
-  ```go 
+  ```go
   type Vertex struct {
     Lat, Long float64
   }
@@ -462,7 +474,8 @@ Other slices that share the same underlying array will see those changes.
       },
     }
   ```
-* Insert or update an element in map m:
+
+- Insert or update an element in map m:
 
   m[key] = elem
 
@@ -486,8 +499,9 @@ Other slices that share the same underlying array will see those changes.
 
   elem, ok := m[key]
 
-* Just like ML, functions have first class treatment in Go.
-  Syntax: 
+- Just like ML, functions have first class treatment in Go.
+  Syntax:
+
   ```go
   func compute(fn func(float64, float64) float64) float64 {
     return fn(3, 4)
@@ -501,9 +515,10 @@ Other slices that share the same underlying array will see those changes.
     fmt.Println(compute(hypot)) // output 5
   ```
 
-* Go functions may be closures. A closure is a function value that references variables from outside its body. The function may access and assign to the referenced variables; in this sense the function is "bound" to the variables.
+- Go functions may be closures. A closure is a function value that references variables from outside its body. The function may access and assign to the referenced variables; in this sense the function is "bound" to the variables.
 
   For example, the adder function returns a closure. Each closure is bound to its own sum variable.
+
   ```go
   func adder() func(int) int {
     sum := 0
@@ -531,7 +546,7 @@ Other slices that share the same underlying array will see those changes.
   */
   ```
 
-* Go does not have classes. However, you can define methods on types.
+- Go does not have classes. However, you can define methods on types.
 
   A method is a function with a special receiver argument.
 
@@ -547,9 +562,11 @@ Other slices that share the same underlying array will see those changes.
     fmt.Println(v.Abs())
   }
   ```
+
   In this example, the Abs method has a receiver of type Vertex named v.
 
-* You can declare a method on non-struct types, too.
+- You can declare a method on non-struct types, too.
+
   ```go
 
   type MyFloat float64
@@ -569,11 +586,12 @@ Other slices that share the same underlying array will see those changes.
     fmt.Println(f.Abs())
   }
   ```
+
   In this example we see a numeric type MyFloat with an Abs method.
 
   You can only declare a method with a receiver whose type is defined in the same package as the method. You cannot declare a method with a receiver whose type is defined in another package (which includes the built-in types such as int).
 
-* **Pointer receivers**
+- **Pointer receivers**
 
   ```go
   func (v *Vertex) Scale(f float64) {
@@ -587,19 +605,20 @@ Other slices that share the same underlying array will see those changes.
     fmt.Println(v.Abs()) // Output: 50
   }
   ```
-  Methods with pointer receivers can modify the value to which the receiver points (as Scale does here). 
+
+  Methods with pointer receivers can modify the value to which the receiver points (as Scale does here).
 
   With a value receiver, the Scale method operates on a copy of the original Vertex value. (This is the same behavior as for any other function argument.) The Scale method must have a pointer receiver to change the Vertex value declared in the main function.
 
-* As a convenience, Go interprets the statement v.Scale(5) as (&v).Scale(5) since the Scale method has a pointer receiver (but the same doesn't hold in case of functions!).
+- As a convenience, Go interprets the statement v.Scale(5) as (&v).Scale(5) since the Scale method has a pointer receiver (but the same doesn't hold in case of functions!).
 
-* While methods with value receivers take either a value or a pointer as the receiver when they are called. (which again doesn't hold true for true for functions!)
+- While methods with value receivers take either a value or a pointer as the receiver when they are called. (which again doesn't hold true for functions!)
 
-* "Pointer receiver" is preferred as we can do modifications and also we save memory as copying doesn't have to occur. 
+- "Pointer receiver" is preferred as we can do modifications and also we save memory as copying doesn't have to occur.
 
-* In general, all methods on a given type should have either value or pointer receivers, but not a mixture of both.
+- In general, all methods on a given type should have either value or pointer receivers, but not a mixture of both.
 
-* An **interface** type is defined as a set of method signatures.
+- An **interface** type is defined as a set of method signatures.
 
   A value of interface type can hold any value that implements those methods.
 
@@ -642,7 +661,7 @@ Other slices that share the same underlying array will see those changes.
   }
   ```
 
-* If the concrete value inside the interface itself is nil, the method will be called with a nil receiver.
+- If the concrete value inside the interface itself is nil, the method will be called with a nil receiver.
 
   In some languages this would trigger a null pointer exception, but in Go it is common to write methods that gracefully handle being called with a nil receiver (as with the method M in this example.)
 
@@ -656,11 +675,11 @@ Other slices that share the same underlying array will see those changes.
   }
   ```
 
-* A nil interface value holds neither value nor concrete type.
+- A nil interface value holds neither value nor concrete type.
 
   Calling a method on a nil interface is a run-time error because there is no type inside the interface tuple to indicate which concrete method to call.
 
-* The interface type that specifies zero methods is known as the empty interface:
+- The interface type that specifies zero methods is known as the empty interface:
 
   interface{}
   An empty interface may hold values of any type. (Every type implements at least zero methods.)
@@ -689,7 +708,7 @@ Other slices that share the same underlying array will see those changes.
   */
   ```
 
-* ```go
+- ```go
   func main() {
     var i interface{} = "hello"
 
@@ -702,11 +721,12 @@ Other slices that share the same underlying array will see those changes.
     f, ok := i.(float64) // if false, f will be zero value of type T in i.(T)
     fmt.Println(f, ok)
 
-    f = i.(float64) // panic (its a runtime error), should therefore check with ok 
+    f = i.(float64) // panic (its a runtime error), should therefore check with ok
     fmt.Println(f)
   }
   ```
-* ```go
+
+- ```go
   func do(i interface{}) {
     switch v := i.(type) {
     case int:
@@ -730,13 +750,15 @@ Other slices that share the same underlying array will see those changes.
   */
   ```
 
-* ```go
+- ```go
   // Stringers!
   type Stringer interface {
       String() string
   }
   ```
+
   A Stringer is a type that can describe itself as a string. The fmt package (and many others) look for this interface to print values.
+
   ```go
   // example
   type Person struct {
@@ -755,13 +777,16 @@ Other slices that share the same underlying array will see those changes.
   }
   ```
 
-* The error type is a built-in interface similar to fmt.Stringer:
+- The error type is a built-in interface similar to fmt.Stringer:
+
   ```go
   type error interface {
       Error() string
   }
   ```
+
   A nil error denotes success; a non-nil error denotes failure.
+
   ```go
   // Example
   type MyError struct {
@@ -791,7 +816,8 @@ Other slices that share the same underlying array will see those changes.
   */
   ```
 
-* Read populates the given byte slice with data and returns the number of bytes populated and an error value. It returns an io.EOF error when the stream ends.
+- Read populates the given byte slice with data and returns the number of bytes populated and an error value. It returns an io.EOF error when the stream ends.
+
   ```go
   import (
     "fmt"
@@ -813,7 +839,8 @@ Other slices that share the same underlying array will see those changes.
     }
   }
   ```
-* A *goroutine* is a lightweight thread managed by the Go runtime.
+
+- A _goroutine_ is a lightweight thread managed by the Go runtime.
 
   `go f(x, y, z)`
 
@@ -823,9 +850,9 @@ Other slices that share the same underlying array will see those changes.
 
   The evaluation of f, x, y, and z happens in the current goroutine and the execution of f happens in the new goroutine.
 
-  Goroutines run in the same address space, so access to shared memory must be synchronized. 
+  Goroutines run in the same address space, so access to shared memory must be synchronized.
 
-* ```go
+- ```go
   func main() {
     var wg sync.WaitGroup
     wg.Add(1)
@@ -845,12 +872,14 @@ Other slices that share the same underlying array will see those changes.
   }
   ```
 
-* Channels are a typed conduit through which you can send and receive values with the channel operator, <-.
+- Channels are a typed conduit through which you can send and receive values with the channel operator, <-.
+
   ```go
   ch <- v    // Send v to channel ch.
   v := <-ch  // Receive from ch, and
             // assign value to v.
   ```
+
   (The data flows in the direction of the arrow.)
 
   Like maps and slices, channels must be created before use:
@@ -882,7 +911,7 @@ Other slices that share the same underlying array will see those changes.
   } // output -5 17 12
   ```
 
-* ```go
+- ```go
   func main() {
     c := make(chan string)
     go count("sahiwal", c)
@@ -900,30 +929,34 @@ Other slices that share the same underlying array will see those changes.
       c <- what
     }
     close(c) // always sender should close the channel
-  }  
+  }
   ```
-* ```go
+
+- ```go
   // syntactic sugar
   func main() {
     c := make(chan string)
     go count("sahiwal", c)
     for msg := range c {
       fmt.Println(msg)
-    }  
+    }
   }
   // rest is same as before
   ```
 
-* ```go
+- ```go
   // following will give deadlock error
   func main() {
     c := make(chan string)
     c <- "hello"
     msg := <-c
     fmt.Println(msg)
-  } 
+  }
 
-* Solution is to use *buffered channels*. Sends to a buffered channel block only when the buffer is full. Receives block when the buffer is empty. So if the above code is modified as `c := make(chan string, 1)` it will work. 
+  ```
+
+- Solution is to use _buffered channels_. Sends to a buffered channel block only when the buffer is full. Receives block when the buffer is empty. So if the above code is modified as `c := make(chan string, 1)` it will work.
+
   ```go
     func main() {
     ch := make(chan int, 2)
@@ -934,8 +967,9 @@ Other slices that share the same underlying array will see those changes.
   }
   ```
 
-* Not waiting for the slower one
-  ```go 
+- Not waiting for the slower one
+
+  ```go
   func main() {
     c1 := make(chan string)
     c2 := make(chan string)
@@ -965,7 +999,7 @@ Other slices that share the same underlying array will see those changes.
   }
   ```
 
-* The default case in a select is run **only if** no other case is ready.
+- The default case in a select is run **only if** no other case is ready.
 
   ```go
   func main() {
@@ -984,7 +1018,7 @@ Other slices that share the same underlying array will see those changes.
       }
     }
   }
-  /* output: 
+  /* output:
       .
       .
   tick.
@@ -1002,7 +1036,9 @@ Other slices that share the same underlying array will see those changes.
   BOOM!
   */
   ```
-* Mutual Exclusion!
+
+- Mutual Exclusion!
+
   ```go
   // SafeCounter is safe to use concurrently.
   type SafeCounter struct {
@@ -1036,3 +1072,5 @@ Other slices that share the same underlying array will see those changes.
     fmt.Println(c.Value("somekey"))
   }
   ```
+
+- Please read this: https://flaviocopes.com/go-copying-structs/

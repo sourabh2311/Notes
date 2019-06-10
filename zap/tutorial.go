@@ -79,6 +79,8 @@ func logger2() { // Custom Logger (This way I understand to be the best among ot
 
 func logger3() { // Now lets add lumberjack (helps in log rotation)
 	atom := zap.NewAtomicLevel()
+	hi := zap.NewExample()
+	hi.Info("hi")
 	atom.SetLevel(zap.DebugLevel)
 	w := zapcore.AddSync(&lumberjack.Logger{
 		// put you desired file path here!

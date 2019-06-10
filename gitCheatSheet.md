@@ -1,5 +1,6 @@
 ### Creating a repo
 * setup ssh on ur machine, follow this link: https://help.github.com/en/articles/connecting-to-github-with-ssh or basically follow this: https://www.youtube.com/watch?v=HfTXHrWMGVY
+* Also the following is helpful in case working with multiple github accounts: https://medium.com/@xiaolishen/use-multiple-ssh-keys-for-different-github-accounts-on-the-same-computer-7d7103ca8693
 * Two methods to create a repo:
   * Method 1:-
     * to create a repo on github and then clone it using ssh
@@ -25,4 +26,4 @@
 * `git log` - See the log
 * `git stash pop` - Put the changes in stack to the current branch
 * `git stash show` - Show the changes in stack
-* `git rebase eng` 
+* `git rebase eng` - https://www.youtube.com/watch?v=CRlGDDprdOQ  Basically in your master first do git pull, then change branch to your feature implementation branch and then type git rebase eng so that the base of your feature is taken as the latest commit in eng also you can then checkout to the eng branch and then type git rebase yourFeatureBranch to actually merge your changes.
