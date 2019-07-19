@@ -1,0 +1,50 @@
+- name: Creating Controller
+  hosts: localhost
+  gather_facts: no
+  vars_files:
+    - vars/cloud_creation.yml
+  tasks:
+    # Create user account before doing this as otherwise credentials will not be valid
+    - name: Getting AVI Tenant
+      avi_tenant:
+        name: "admin"
+        username: "{{ username }}"
+        password: "{{ password }}"
+        api_version: "{{ api_version }}"
+        controller: "{{ controller }}"
+        tenant: "admin"
+        state: present
+      register: tenant_ref
+    - name: Connecting to cloud connector user
+      # avi_cloudconnectoruser:
+      #   name: "{{ name }}"
+      #   tenant_ref: "{{ tenant_ref }}"
+      #   gcp_credentials:
+      #     service_account_keyfile_date: "{{ lookup('file', gcp_cred_file) }}"
+      #   state: present
+      #   register: avi_cloudconnectoruser
+    - name: Creating Cloud
+      avi_cloud:
+        # controller: "{{ controller }}"
+        # username: "{{ username }}"
+        # password: "{{ password }}"
+        # api_version: "{{ api_version }}"
+        name: "{{ cloud_name }}"
+        vtype: "CLOUD_GCP"
+        gcp_configuration:
+          match_se_group_subnet: false
+          network_config:
+            config: INBAND_MANAGEMENT
+            inband:
+              vpc_project_id: "{{ vpc_project_id }}"
+              vpc_subnet_name: "{{ vpc_subnetwork }}"
+              vpc_network_name: "{{ vpc_network }}"
+          region_name: "{{ region_name }}"
+          se_project_id: "{{ se_project_id }}"
+          firewall_target_tags: "{{ firewall_target_tags }}"
+          zones: "{{ zones }}"
+          cloud_credentials_ref: "{{ avi_cloudconnectoruser.gcp_user.id }}"
+        license_tier: "ENTERPRISE_18"
+        license_type: "LIC_CORES"
+        tenant_ref: "{{ tenant_ref }}"
+        state: present
