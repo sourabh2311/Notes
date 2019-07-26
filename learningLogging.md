@@ -87,9 +87,4 @@
 
 ## **logrus**
 
-
-## **zap**
-
-* Putting atomic level as say info, implys that all log messages will be printed.
-* Putting atomic level as say error, implys only error and fatal gets printed.
-* Printing fatal means termination of software.
+[This](logrus/exampleLogrus.go) example is more than enough.
